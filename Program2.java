@@ -10,6 +10,13 @@
 import java.util.ArrayList;
 
 public class Program2 implements ProgramTwoInterface {
+
+    public void relax (HeapInterface heap, City min, City neighbor, int i){
+        int dist = min.getMinDist() + min.getWeights().get(i);
+        if(dist < neighbor.getMinDist()){
+            heap.changeKey(neighbor, dist);
+        }
+    }
     
     
     // additional constructor fields may be added, but don't delete or modify anything already here
@@ -27,19 +34,33 @@ public class Program2 implements ProgramTwoInterface {
      */
     public int findMinimumRouteDistance(Problem problem) {
 
+        //various variable declarations for readability
+        int neighbor_name = 0;
+        int start_node_name = 0;
+
         // Some code to get you started
+
         City start = problem.getStart();
+        City min = null;
         City dest = problem.getDest();
         start.setMinDist(0);
+
+        start_node_name = start.getName();
 
         HeapInterface heap = problem.getHeap();     // get the heap
         heap.buildHeap(problem.getCities());        // build the heap
 
-        // TODO: implement this function
+        //we will be extracting the min from the heap so the size of the ArrayList will keep
+        //decreasing
+        while(heap.toArrayList().size() > 0){
+            min = heap.extractMin();
 
+            for(int i = 0; i < min.getNeighbors().size(); i++){
+                relax(heap, min, min.getNeighbors().get(i), i);
+            }
+        }
 
-
-        return -1;
+        return dest.getMinDist();
     }
 
     /**
@@ -50,6 +71,9 @@ public class Program2 implements ProgramTwoInterface {
      */
     public int findMinimumLength(Problem problem) {
         // TODO: implement this function
+
+
+
         return -1;
     }
 

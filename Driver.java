@@ -124,17 +124,10 @@ public class Driver {
             tester.add(zero);
             tester.add(one);
 
-            City three = new City(3);
-            three.setMinDist(5);
             problem.setCities(tester);
             System.out.println(problem.getHeap());
-            problem.getHeap().insertNode(three);
-            problem.getHeap().delete(2);
-            problem.getHeap().changeKey(zero, 100);
-            problem.getHeap().changeKey(one, 1000);
             City min = problem.getHeap().extractMin();
-            System.out.println(min);
-            System.out.println(problem.getHeap());
+            City min2 = problem.getHeap().extractMin();
             System.out.println(verifyHeap(problem.getHeap()));
         }
 

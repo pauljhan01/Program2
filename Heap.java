@@ -25,11 +25,8 @@ public class Heap implements HeapInterface {
         }
 
         //various variable declarations for the sake of readability
-        int parent_index = ((current_index%2 == 1)?(current_index/2)-1:current_index/2);
-        if(current_index == 1){
-            parent_index = 0;
-        }
-
+        int parent_index = (current_index-1)/2;
+        
         int parent_name = minHeap.get(parent_index).getName();
         int current_name = minHeap.get(current_index).getName();
 
@@ -67,7 +64,6 @@ public class Heap implements HeapInterface {
                 HeapifyUp(minHeap, parent_index);
             }
         }
-
     }
     
     public void HeapifyDown(ArrayList<City> minHeap, int current_index){
@@ -93,15 +89,10 @@ public class Heap implements HeapInterface {
         int left_child_name = 0;
         int current_name = 0;
 
-        if(current_index == 0){
-            left_child_index = 1; 
-            right_child_index = 2;
-        }
-        else{
-            left_child_index = 2*current_index+1; 
-            right_child_index = 2*current_index+2;
-        }
-        if(left_child_index > minHeap.size()){
+        left_child_index = 2*current_index+1; 
+        right_child_index = 2*current_index+2; 
+        
+        if(left_child_index > minHeap.size()-1){
             return;
         }
         if(left_child_index == minHeap.size()-1){
@@ -207,7 +198,6 @@ public class Heap implements HeapInterface {
                 current_city.setIndex(min_child_index);
                 min_child.setIndex(current_index);
                 HeapifyDown(minHeap, min_child_index);
-
             }
             //however, if the smallest child has the same key as the parent then we break the tie
             //using the integer name
@@ -364,12 +354,12 @@ public class Heap implements HeapInterface {
 
         //how to sort the heap again?
         //various variable declarations, for sake of readability
-        int parent_index = ((current_index%2 == 1)?(current_index/2)-1:current_index/2);
+        int parent_index = (current_index-1)/2;
         if(current_index == 1){
             parent_index = 0;
         }
-        int left_child_index = 2*current_index;
-        int right_child_index = 2*current_index+1;
+        int left_child_index = 2*current_index+1;
+        int right_child_index = 2*current_index+2;
         int current_key = newDist;
 
         /*
