@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "Driver",
             "projectName": "Program2_b2336c41",
-            "args": ["-h","src/tests/1.txt"]
+            "args": ["-i","src/tests/1.txt"]
         }
     ]
 }

@@ -181,7 +181,7 @@ public class Heap implements HeapInterface {
                 }
             }
 
-                //to improve readability
+            //to improve readability
             min_child = minHeap.get(min_child_index);
             min_child_key = minHeap.get(min_child_index).getMinDist();
             min_child_name = minHeap.get(min_child_index).getName();
@@ -233,6 +233,7 @@ public class Heap implements HeapInterface {
      */
     public void buildHeap(ArrayList<City> cities) {
         minHeap = cities;
+        int start_index;
         //first, we have an unsorted array of cities
 
         /* we will be creating a heap in O(n) time
@@ -245,7 +246,10 @@ public class Heap implements HeapInterface {
         //we begin at the node last non-leaf node
         //this is because the first non-leaf node would be the root
         //we then go in reverse order until we hit the node.
-        int start_index = ((minHeap.size())/2)-1; 
+
+        //there is an edge case where if there is one element on the heap, start_index is -1
+        //this crashes the program so we use a ternary operator because i hate if else statements
+        start_index = (minHeap.size() == 1 ? 0 : ((minHeap.size()/2)-1));
         HeapifyDown(minHeap, start_index);
     }
 

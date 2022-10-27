@@ -11,10 +11,17 @@ import java.util.ArrayList;
 
 public class Program2 implements ProgramTwoInterface {
 
-    public void relax (HeapInterface heap, City min, City neighbor, int i){
+    public void relaxDistance(HeapInterface heap, City min, City neighbor, int i){
         int dist = min.getMinDist() + min.getWeights().get(i);
         if(dist < neighbor.getMinDist()){
             heap.changeKey(neighbor, dist);
+        }
+    }
+
+    public void relaxLength(HeapInterface heap, City min, City neighbor, int index){
+        int weight_of_edge = min.getWeights().get(index);
+        if(heap.toArrayList().contains(neighbor) && weight_of_edge < neighbor.getMinDist()){
+            heap.changeKey(neighbor,min.getWeights().get(index));
         }
     }
     
@@ -50,13 +57,14 @@ public class Program2 implements ProgramTwoInterface {
         HeapInterface heap = problem.getHeap();     // get the heap
         heap.buildHeap(problem.getCities());        // build the heap
 
+
+
         //we will be extracting the min from the heap so the size of the ArrayList will keep
         //decreasing
         while(heap.toArrayList().size() > 0){
             min = heap.extractMin();
-
             for(int i = 0; i < min.getNeighbors().size(); i++){
-                relax(heap, min, min.getNeighbors().get(i), i);
+                relaxDistance(heap, min, min.getNeighbors().get(i), i);
             }
         }
 
@@ -72,9 +80,25 @@ public class Program2 implements ProgramTwoInterface {
     public int findMinimumLength(Problem problem) {
         // TODO: implement this function
 
+        int totalDist = 0;
 
+        City min = null;
 
-        return -1;
+        HeapInterface heap = problem.getHeap();     // get the heap
+        heap.buildHeap(problem.getCities());        // build the heap
+
+        heap.toArrayList().get(0).setMinDist(0); //set the key of the first node to 0
+
+        while(heap.toArrayList().size() > 0){
+            min = heap.extractMin();
+
+            totalDist += min.getMinDist();
+
+            for(int i = 0; i < min.getNeighbors().size(); i++){
+                relaxLength(heap, min, min.getNeighbors().get(i), i);
+            }
+        }
+        return totalDist;
     }
 
     //returns edges and weights in a string.
